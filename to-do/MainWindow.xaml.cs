@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -25,6 +26,7 @@ namespace to_do
         {
             InitializeComponent();
             todos = new Todos();
+            todos.Load();
             DataContext = todos;
         }
 
@@ -32,10 +34,36 @@ namespace to_do
         {
             Todo todo = new Todo()
             {
-                Desc = NewTodoTextBox.Text
+                Desc = NewTodoTextBox.Text,
+                Time = NewTimeTextBox.Text
             };
             todos.AllTodos.Add(todo);
             
+        }
+
+        private void DeleteTodoButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (!(sender is Button button))
+            {
+                return;
+            }
+
+            var todo = button.DataContext as Todo;
+            if (todo == null)
+            {
+                return;
+            }
+
+            if (todos.AllTodos.Contains(todo))
+            {
+                todos.AllTodos.Remove(todo);
+            }
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            todos.Save();
+            base.OnClosing(e);
         }
     }
 }

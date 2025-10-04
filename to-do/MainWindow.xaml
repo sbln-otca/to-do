@@ -14,12 +14,18 @@
         <ListView Grid.Row="0" ItemsSource="{Binding AllTodos}">
             <ListView.ItemTemplate>
                 <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
                     <CheckBox IsChecked="{Binding Check}" Content="{Binding Desc}"/>
+                        <TextBlock Text=" | " Margin="5,0"/>
+                        <TextBlock Text="{Binding Time}"/>
+                        <Button Content="Delete" Margin="10,0,0,0" Click="DeleteTodoButton_Click"/>
+                    </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
         <StackPanel Grid.Row=" 1" Orientation="Horizontal">
-            <TextBox x:Name="NewTodoTextBox" Width="150" Margin="10"/>
+            <TextBox x:Name="NewTodoTextBox" Width="250" Margin="10"/>
+            <TextBox x:Name="NewTimeTextBox" Width="120" Margin="10"/>
             <Button Content="Add Todo" Click="AddTodoButton_clicked" Margin="10"/>
         </StackPanel>
     </Grid>
